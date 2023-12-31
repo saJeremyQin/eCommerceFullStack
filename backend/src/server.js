@@ -1,5 +1,5 @@
 import express from 'express';
-import cors from 'cors';
+// import cors from 'cors';
 import { MongoClient } from 'mongodb';
 import path from 'path';
 
@@ -7,7 +7,7 @@ const url = 'mongodb+srv://jeremyqinsa:600186Qd%21%21@cluster0.xm7uvh0.mongodb.n
 const client = new MongoClient(url);
 
 const app = express();
-app.use(cors());
+// app.use(cors());
 app.use(express.json());
 
 app.use('/images', express.static(path.join(__dirname, '../assets')));
