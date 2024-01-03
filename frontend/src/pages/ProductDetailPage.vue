@@ -14,6 +14,7 @@
             >
                 {{ itemsInCart ? 'Items already exist' : 'Add to Cart'}}
             </button>
+            <button class="sign-in" @click="signIn">Sign in to add to Cart</button>
         </div>
     </div>
     <div v-else>
@@ -27,6 +28,7 @@ import router from '@/router';
 import axios from 'axios';
 import { computed, onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
+import { getAuth, sendSignInLinkToEmail, isSignInWithEmailLink, signInWithEmailLink } from 'firebase/auth';
 import NotFoundPage from './NotFoundPage.vue';
 
 const product = ref();
@@ -37,6 +39,20 @@ const itemsInCart = computed(() => {
     return cartItems.value.some(item => item.id === productId);
 })
 const route = useRoute();
+
+const signIn = async() => {
+    const email = prompt("Please input your email");
+    const auth = getAuth();
+    console.log(email);
+    console.log(auth);
+    const actionCodeSettings = {
+        url:`https://legendary-space-palm-tree-rjx9vppjqw2wqvg-8080.preview.app.github.dev/products/${product.value.id}`,
+        handleCodeInApp: true,
+    };
+    await sendSignInLinkToEmail(auth, email, actionCodeSettings);
+    alert('A login link is sent to the email you provided.');
+    window.localStorage.setItem('emailForSignIn', email);
+}
 
 const addToCart = async () => {
     try {
@@ -51,6 +67,21 @@ const addToCart = async () => {
 }
 
 onMounted(async() => {
+    const auth = getAuth();
+    if(isSignInWithEmailLink(auth, window.location.href)) {
+        let email = window.localStorage.getItem('emailForSignIn');
+        if(!email) {
+            email = window.prompt('Please provide your email for confirmation');
+        }
+        signInWithEmailLink(auth, email, window.location.href).then((result) => {
+            console.log(result.user);
+            alert('You have successfully signed in')
+            window.localStorage.removeItem('emailForSignIn');
+        }).catch((error) => {
+            console.log(error.message);
+        })
+    }
+
     const productId = route.params.productId;
     let response = await axios.get(`/api/products/${productId}`);
     product.value = response.data;
