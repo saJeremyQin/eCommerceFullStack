@@ -43,8 +43,7 @@ const route = useRoute();
 const signIn = async() => {
     const email = prompt("Please input your email");
     const auth = getAuth();
-    console.log(email);
-    console.log(auth);
+
     const actionCodeSettings = {
         url:`https://legendary-space-palm-tree-rjx9vppjqw2wqvg-8080.preview.app.github.dev/products/${product.value.id}`,
         handleCodeInApp: true,
@@ -74,8 +73,8 @@ onMounted(async() => {
             email = window.prompt('Please provide your email for confirmation');
         }
         signInWithEmailLink(auth, email, window.location.href).then((result) => {
-            console.log(result.user);
-            alert('You have successfully signed in')
+            // console.log(result.user);
+            alert(`${result.user},You have successfully signed in`);
             window.localStorage.removeItem('emailForSignIn');
         }).catch((error) => {
             console.log(error.message);
