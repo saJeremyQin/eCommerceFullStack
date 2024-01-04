@@ -6,15 +6,9 @@
         <div class="product-details">
             <h1>{{ product.name }}</h1>
             <h3 class="price">{{ product.price }}</h3>
-            <button 
-                :disabled="itemsInCart"
-                :class="{'grey-button': itemsInCart}"
-                class="add-to-cart" 
-                @click="addToCart"
-            >
-                {{ itemsInCart ? 'Items already exist' : 'Add to Cart'}}
-            </button>
-            <button class="sign-in" @click="signIn">Sign in to add to Cart</button>
+            <button class="add-to-cart" @click="addToCart" v-if="props.user && !itemsInCart">Add to Cart</button>
+            <button class="grey-button" v-if="props.user && itemsInCart">Items Already exist</button>
+            <button class="sign-in" @click="signIn" v-if="!props.user">Sign in to add to Cart</button>
         </div>
     </div>
     <div v-else>
@@ -26,10 +20,19 @@
 <script setup>
 import router from '@/router';
 import axios from 'axios';
-import { computed, onMounted, ref } from 'vue';
+import { computed, onMounted, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { getAuth, sendSignInLinkToEmail, isSignInWithEmailLink, signInWithEmailLink } from 'firebase/auth';
 import NotFoundPage from './NotFoundPage.vue';
+import { defineProps } from 'vue';
+
+const props = defineProps({
+    user: {
+        type: Object,
+        default: null,
+    }
+})
+// const user = defineProps(['user']);
 
 const product = ref();
 const cartItems = ref([]);
@@ -38,6 +41,7 @@ const itemsInCart = computed(() => {
     const productId = product.value.id;
     return cartItems.value.some(item => item.id === productId);
 })
+
 const route = useRoute();
 
 const signIn = async() => {
@@ -55,17 +59,26 @@ const signIn = async() => {
 
 const addToCart = async () => {
     try {
+        console.log('add to cart', props.user);
         const response = await axios.post('/api/users/12345/cart', {id: product.value.id});
         console.log(response.data);
         router.push({
             path:'/cart'
         })
     } catch (error) {
-        console.log(error);
+        // console.log(error);
     }
 }
 
+watch(async (newUser) => {
+    if(newUser) {
+        const cartResponse = await axios.get(`/api/users/${newUser.uid}/cart`);
+        cartItems.value = cartResponse.data;
+    }
+});
+
 onMounted(async() => {
+    console.log('On mounted',props.user);
     const auth = getAuth();
     if(isSignInWithEmailLink(auth, window.location.href)) {
         let email = window.localStorage.getItem('emailForSignIn');
@@ -73,7 +86,6 @@ onMounted(async() => {
             email = window.prompt('Please provide your email for confirmation');
         }
         signInWithEmailLink(auth, email, window.location.href).then((result) => {
-            // console.log(result.user);
             alert(`${result.user},You have successfully signed in`);
             window.localStorage.removeItem('emailForSignIn');
         }).catch((error) => {
@@ -85,7 +97,10 @@ onMounted(async() => {
     let response = await axios.get(`/api/products/${productId}`);
     product.value = response.data;
 
-    const cartResponse = await axios.get('/api/users/12345/cart');
-    cartItems.value = cartResponse.data;
+    if(props.user) {
+        console.log('get carts of', props.user.uid);
+        const cartResponse = await axios.get(`/api/users/${props.user.uid}/cart`);
+        cartItems.value = cartResponse.data;
+    }
 })
 </script>

@@ -36,7 +36,7 @@ app.get('/api/users/:userId/cart', async (req,res) => {
 
     // user is an object representing a user document from the "users" collection in MongoDB
     const user = await db.collection('users').findOne({id: req.params.userId});
-    const cartArray = await populatedCartArray(user.cartItems);
+    const cartArray = await populatedCartArray(user?.cartItems || []);
     
     res.json(cartArray);
 })
@@ -71,7 +71,7 @@ app.post('/api/users/:userId/cart', async (req,res) => {
     )
 
     const user = await db.collection('users').findOne({id: userId});
-    const cartArray = await populatedCartArray(user.cartItems);
+    const cartArray = await populatedCartArray(user?.cartItems || []);
     res.json(cartArray);    
 })
 
@@ -94,7 +94,7 @@ app.delete('/api/users/:userId/cart/:productId',async (req,res) => {
         }
     )
     const user = await db.collection('users').findOne({id: userId});
-    const cartArray = await populatedCartArray(user.cartItems);
+    const cartArray = await populatedCartArray(user?.cartItems || []);
     res.json(cartArray);    
 });
 

@@ -20,10 +20,10 @@ eventBus.on('removeFrom-Cart', async (productId) => {
     // console.log('id is', id);
     try {
         const response = await axios.delete(`/api/users/12345/cart/${productId}`);
-        console.log(response.data); 
+        // console.log(response.data); 
         cartItems.value = response.data;    
     } catch (error) {
-        console.log(error.message);   
+        // console.log(error.message);   
     }
 })
 
