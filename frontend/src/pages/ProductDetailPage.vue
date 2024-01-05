@@ -46,6 +46,10 @@ const route = useRoute();
 
 const signIn = async() => {
     const email = prompt("Please input your email");
+    if(email === null) {
+        return ;
+    }
+    
     const auth = getAuth();
 
     const actionCodeSettings = {
@@ -59,9 +63,9 @@ const signIn = async() => {
 
 const addToCart = async () => {
     try {
-        console.log('add to cart', props.user);
-        const response = await axios.post('/api/users/12345/cart', {id: product.value.id});
-        console.log(response.data);
+        console.log('add to cart, uid', props.user.uid);
+        const response = await axios.post(`/api/users/${props.user.uid}/cart`, {id: product.value.id});
+        console.log('add to cart, response',response.data);
         router.push({
             path:'/cart'
         })
@@ -70,9 +74,9 @@ const addToCart = async () => {
     }
 }
 
-watch(async (newUser) => {
-    if(newUser) {
-        const cartResponse = await axios.get(`/api/users/${newUser.uid}/cart`);
+watch(async () => {
+    if(props.user) {
+        const cartResponse = await axios.get(`/api/users/${props.user.uid}/cart`);
         cartItems.value = cartResponse.data;
     }
 });
@@ -86,7 +90,7 @@ onMounted(async() => {
             email = window.prompt('Please provide your email for confirmation');
         }
         signInWithEmailLink(auth, email, window.location.href).then((result) => {
-            alert(`${result.user},You have successfully signed in`);
+            alert(`${result.user.uid},You have successfully signed in`);
             window.localStorage.removeItem('emailForSignIn');
         }).catch((error) => {
             console.log(error.message);
