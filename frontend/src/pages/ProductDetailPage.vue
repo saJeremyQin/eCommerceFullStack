@@ -53,7 +53,7 @@ const signIn = async() => {
     const auth = getAuth();
 
     const actionCodeSettings = {
-        url:`https://legendary-space-palm-tree-rjx9vppjqw2wqvg-8080.preview.app.github.dev/products/${product.value.id}`,
+        url:`https://vue-ecommerce-fullstack.onrender.com/products/${product.value.id}`,
         handleCodeInApp: true,
     };
     await sendSignInLinkToEmail(auth, email, actionCodeSettings);
