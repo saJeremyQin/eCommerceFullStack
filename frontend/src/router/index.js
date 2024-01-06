@@ -8,6 +8,7 @@ const routes = [
     { path: '/products', component: ProductsPage },
     { path: '/products/:productId', component: ProductDetailPage },
     { path: '/cart', component: ShoppingCartPage },
+    { path: '/', redirect: '/products'},
     { path: '/:pathMatch(.*)*', component: NotFoundPage },
 ];
 

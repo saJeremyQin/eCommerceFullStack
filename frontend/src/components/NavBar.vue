@@ -5,12 +5,29 @@
                 <img :src=logo />
             </div>
         </router-link>
-        <router-link to="/cart" class="cart-link">
-            <button>Shopping Cart</button>
-        </router-link>
+        <div class="nav-buttons-wrap">
+            <button v-if="props.user" @click="signOut">Sign Out</button>
+            <router-link to="/cart" >
+                <button>Shopping Cart</button>
+            </router-link>
+        </div>
     </div>
 </template>
 
 <script setup>
 import logo from '@/assets/logo-hexagon.svg'
+import { defineProps } from 'vue';
+import { getAuth, signOut as FBSignOut } from 'firebase/auth';
+
+const props = defineProps({
+    user: {
+        type: Object,
+        default: null,
+    }
+});
+
+const signOut = async() => {
+    const auth = getAuth();
+    FBSignOut(auth);
+}
 </script>

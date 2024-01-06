@@ -11,6 +11,10 @@ const app = express();
 app.use(express.json());
 
 app.use('/images', express.static(path.join(__dirname, '../assets')));
+app.use(express.static(
+    path.resolve(__dirname, '../dist/'),
+    { maxAge:'1y', etag:false }
+))
 
 async function populatedCartArray (cartIds) {
     await client.connect();
@@ -36,7 +40,7 @@ app.get('/api/users/:userId/cart', async (req,res) => {
 
     // user is an object representing a user document from the "users" collection in MongoDB
     const user = await db.collection('users').findOne({id: req.params.userId});
-    const cartArray = await populatedCartArray(user.cartItems);
+    const cartArray = await populatedCartArray(user?.cartItems || []);
     
     res.json(cartArray);
 })
@@ -58,6 +62,14 @@ app.post('/api/users/:userId/cart', async (req,res) => {
     await client.connect();
     const db = client.db('ECommerceApp-db');
 
+    const existingUser = await db.collection('users').findOne({id:userId});
+    if(!existingUser) {
+        await db.collection('users').insertOne({
+            id: userId,
+            cartItems:[],
+        });
+    }
+
     await db.collection('users').updateOne(
         {
             id: userId
@@ -71,7 +83,7 @@ app.post('/api/users/:userId/cart', async (req,res) => {
     )
 
     const user = await db.collection('users').findOne({id: userId});
-    const cartArray = await populatedCartArray(user.cartItems);
+    const cartArray = await populatedCartArray(user?.cartItems || []);
     res.json(cartArray);    
 })
 
@@ -94,10 +106,15 @@ app.delete('/api/users/:userId/cart/:productId',async (req,res) => {
         }
     )
     const user = await db.collection('users').findOne({id: userId});
-    const cartArray = await populatedCartArray(user.cartItems);
+    const cartArray = await populatedCartArray(user?.cartItems || []);
     res.json(cartArray);    
 });
 
-app.listen(8000, () => {
-    console.log('Server is runing on 8000');
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../dist/index.html'));
+})
+
+const port = process.env.PORT || 8000;
+app.listen(port, () => {
+    console.log(`Server is runing on ${port}`);
 })
