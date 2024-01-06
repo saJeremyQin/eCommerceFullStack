@@ -130,12 +130,11 @@ h1 {
   position: absolute;
   right: 16px;
   top: 16px;
+  display: flex;
 }
 
-.nav-buttons-wrap {
-  position: absolute;
-  right: 16px;
-  top: 16px;
+.nav-buttons-wrap button {
+  margin-left: 10px;
 }
 
 .cart-link {

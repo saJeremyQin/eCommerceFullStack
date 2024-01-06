@@ -17,7 +17,6 @@
 import { defineProps } from 'vue';
 import eventBus from '@/utils/eventBus';
 const removeFromCart = (productId) => {
-    // console.log(id);
     eventBus.emit('removeFrom-Cart',productId);
 } 
 defineProps(['products']);
