@@ -1,11 +1,15 @@
 <template>
     <v-row class="mt-4">
         <v-col cols="12" md="4" v-for="(product) in props.products" :key="product.id">
-            <v-card>
+            <v-card class="text-center">
                 <v-img :src="product.imageUrl" />
                 <v-card-title class="product-name">{{ product.name }}</v-card-title>
                 <v-card-subtitle class="product-price">{{ product.price }}</v-card-subtitle>
-                <v-btn :to="'products' + '/' + product.id">
+                <v-btn 
+                    :to="'products' + '/' + product.id"
+                    class="mb-2"
+                    color="#FF5733"
+                >
                     View Details
                 </v-btn>
             </v-card>
