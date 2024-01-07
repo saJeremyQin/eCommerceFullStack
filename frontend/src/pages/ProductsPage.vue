@@ -1,6 +1,8 @@
 <template>
-    <h1>Products</h1>
-    <ProductsList :products="products"/>
+    <v-container>
+        <h1>Products</h1>
+        <ProductsList :products="products"/>
+    </v-container>
 </template>
 
 <script setup>
