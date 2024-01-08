@@ -1,12 +1,23 @@
 <template>
-    <h1>Shopping Cart</h1>
-    <div v-if="cartItems.length > 0">
-        <ShoppingCartList :products="cartItems"/>
-        <button class="checkout-button">Proceed to Checkout</button>
-    </div>
-    <div v-else>
-        You have no items in your cart yet.
-    </div>
+    <v-container>
+        <v-row>
+            <v-col cols="12">
+                <h1>Shopping Cart</h1>
+            </v-col>
+        </v-row>
+        <v-row v-if="cartItems.length > 0">
+            <v-col cols="12">
+                <ShoppingCartList :products="cartItems" />
+                <v-btn class="checkout-button">Proceed to Checkout</v-btn>
+            </v-col>
+        </v-row>
+        <v-row v-else>
+            <v-col class="text-center">
+                <p>You have no items in your cart yet.</p>
+            </v-col>
+        </v-row>
+    </v-container>
+
 </template>
 
 <script setup>
@@ -50,3 +61,10 @@ onMounted(async () => {
 })
 
 </script>
+
+<style scoped>
+.checkout-button {
+    background-color:#269EFF;
+    border: 1px solid #1F7087;
+}
+</style>

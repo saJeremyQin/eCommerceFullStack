@@ -29,8 +29,7 @@ const props = defineProps({
 
 <style scoped>
 .vd-button {
-    color: #4f4e4e;
-    background-color:#f1f1f1;
-    border: 1px solid #ff5733;
+    background-color:#269EFF;
+    border: 1px solid #1F7087;
 }
 </style>
