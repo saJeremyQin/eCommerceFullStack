@@ -1,21 +1,35 @@
 <template>
-    <div v-if="product">
-        <div class="img-wrap">
-            <img :src="product.imageUrl" />
+    <v-container>
+        <div v-if="product">
+            <v-row>
+                <v-col cols="12" md="10" offset-md="1">
+                    <v-img :src="product.imageUrl" alt="Product Image" class="detail-img"></v-img>
+                </v-col>
+                <v-col cols="12" md="10" offset-md="1">
+                    <div class="d-flex flex-no-wrap justify-space-between">
+                        <v-text class="text-h3">{{ product.name }}</v-text>
+                        <v-text class="text-h5">{{ product.price }}</v-text>
+                    </div>
+                </v-col>
+                <v-col cols="12" md="10" offset-md="1">
+                    <v-btn v-if="props.user && !itemsInCart" @click="addToCart" block="true" class="addToCart-button">
+                        Add to Cart
+                    </v-btn>
+                    <v-btn v-if="props.user && itemsInCart" disabled>
+                        Items Already Exist
+                    </v-btn>
+                    <v-btn v-if="!props.user" @click="signIn">
+                        Sign in to add to Cart
+                    </v-btn>
+                </v-col>     
+            </v-row>
         </div>
-        <div class="product-details">
-            <h1>{{ product.name }}</h1>
-            <h3 class="price">{{ product.price }}</h3>
-            <button class="add-to-cart" @click="addToCart" v-if="props.user && !itemsInCart">Add to Cart</button>
-            <button class="grey-button" v-if="props.user && itemsInCart">Items Already exist</button>
-            <button class="sign-in" @click="signIn" v-if="!props.user">Sign in to add to Cart</button>
+        <div v-else>
+            <NotFoundPage />
         </div>
-    </div>
-    <div v-else>
-        <NotFoundPage />
-    </div>
+    </v-container>
+  </template>
 
-</template>
 
 <script setup>
 import router from '@/router';
@@ -109,3 +123,13 @@ onMounted(async() => {
     }
 })
 </script>
+
+<style scoped>
+.detail-img {
+    height: 400px;
+}
+.addToCart-button {
+    background-color:#269EFF;
+    border: 1px solid #1F7087;
+}
+</style>
