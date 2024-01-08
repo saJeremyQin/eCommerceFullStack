@@ -1,16 +1,37 @@
 <template>
-        <div 
-            class="product-container"
-            v-for="product in products"
-            :key="product.id"
-        >
-            <img class="product-image" :src="product.imageUrl" />
-            <div class="details-wrap">
-                <h3>{{ product.name }}</h3>
-                <p>{{ product.price }}</p>
-            </div>
-            <button class="remove-button" @click="removeFromCart(product.id)">Remove from Cart</button>
-        </div> 
+    <v-row>
+        <v-col cols="12" v-for="product in products" :key="product.id">
+                <div class="d-flex flex-no-wrap justify-space-between">
+                    <div class="d-flex flex-no-wrap align-center">
+                        <v-avatar
+                            class="ma-3"
+                            size="125"
+                            rounded="0"
+                        >
+                            <v-img :src="product.imageUrl"></v-img>
+                        </v-avatar>
+                        <div >
+                            <v-card-title class="text-h5">
+                                {{ product.name }}
+                            </v-card-title>
+                            <v-card-subtitle>
+                                {{ product.price }}
+                            </v-card-subtitle>
+                        </div>
+                    </div>
+                    <v-card-actions>
+                        <v-btn
+                            class="ms-2"
+                            variant="outlined"
+                            size="small"
+                            @click="removeFromCart(product.id)"
+                        >
+                            Remove from Cart
+                        </v-btn>
+                    </v-card-actions>  
+                </div>
+        </v-col>
+    </v-row> 
 </template>
 
 <script setup>
