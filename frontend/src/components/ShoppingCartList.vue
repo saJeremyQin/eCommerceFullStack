@@ -21,7 +21,7 @@
                 </div>
                 <v-card-actions>
                     <v-btn
-                        class="ms-2 rm-button"
+                        class="ms-2 btn-style"
                         variant="outlined"
                         size="small"
                         @click="removeFromCart(product.id)"
@@ -44,7 +44,7 @@ defineProps(['products']);
 </script>
 
 <style scoped>
-.rm-button {
+.btn-style {
     background-color:#269EFF;
     border: 1px solid #1F7087;
 }   

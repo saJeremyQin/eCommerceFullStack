@@ -8,7 +8,7 @@
         <v-row v-if="cartItems.length > 0">
             <v-col cols="12">
                 <ShoppingCartList :products="cartItems" />
-                <v-btn class="checkout-button">Proceed to Checkout</v-btn>
+                <v-btn block="true" class="btn-style">Proceed to Checkout</v-btn>
             </v-col>
         </v-row>
         <v-row v-else>
@@ -63,7 +63,7 @@ onMounted(async () => {
 </script>
 
 <style scoped>
-.checkout-button {
+.btn-style {
     background-color:#269EFF;
     border: 1px solid #1F7087;
 }

@@ -1,23 +1,28 @@
 <template>
-    <div class="nav-bar">
-        <router-link to="/products" class="products-link">
-            <div class="logo-wrap">
-                <img :src=logo />
+    <v-row>
+        <v-col cols="12">
+            <div class="d-flex flex-no-wrap justify-space-between nav-bar">
+                <div>
+                    <router-link to="/products" class="products-link">
+                        <v-img class="logo-img" :src="logo" ></v-img>
+                    </router-link>
+                </div>
+                <div class="d-flex align-center mr-4">
+                    <v-btn v-if="props.user" @click="signOut" class="signout-btn">Sign Out</v-btn>  
+                    <router-link to="/cart" >
+                        <v-btn class="btn-style">Shopping Cart</v-btn>
+                    </router-link>      
+                </div>        
             </div>
-        </router-link>
-        <div class="nav-buttons-wrap">
-            <button v-if="props.user" @click="signOut">Sign Out</button>
-            <router-link to="/cart" >
-                <button>Shopping Cart</button>
-            </router-link>
-        </div>
-    </div>
+        </v-col>
+    </v-row>
 </template>
 
 <script setup>
 import logo from '@/assets/logo-hexagon.svg'
 import { defineProps } from 'vue';
 import { getAuth, signOut as FBSignOut } from 'firebase/auth';
+import router from '@/router';
 
 const props = defineProps({
     user: {
@@ -29,5 +34,28 @@ const props = defineProps({
 const signOut = async() => {
     const auth = getAuth();
     FBSignOut(auth);
+    router.push({
+        path:'/products'
+    })
 }
 </script>
+
+<style scoped>
+.nav-bar {
+    border-bottom: 1px solid #ddd;
+    height: 75px;
+}  
+.logo-img {
+    width: 120px;
+    height: 120px;
+}
+.signout-btn {
+    background-color:#269EFF;
+    border: 1px solid #1F7087;
+    margin-right: 10px;
+}
+.btn-style {
+    background-color:#269EFF;
+    border: 1px solid #1F7087;
+}
+</style>

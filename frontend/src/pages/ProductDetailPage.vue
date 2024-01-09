@@ -12,13 +12,13 @@
                     </div>
                 </v-col>
                 <v-col cols="12" md="10" offset-md="1">
-                    <v-btn v-if="props.user && !itemsInCart" @click="addToCart" block="true" class="addToCart-button">
+                    <v-btn v-if="props.user && !itemsInCart" @click="addToCart" block="true" class="btn-style">
                         Add to Cart
                     </v-btn>
-                    <v-btn v-if="props.user && itemsInCart" disabled>
+                    <v-btn v-if="props.user && itemsInCart" disabled class="btn-style" block="true">
                         Items Already Exist
                     </v-btn>
-                    <v-btn v-if="!props.user" @click="signIn">
+                    <v-btn v-if="!props.user" @click="signIn" class="btn-style" block="true">
                         Sign in to add to Cart
                     </v-btn>
                 </v-col>     
@@ -80,7 +80,7 @@ const addToCart = async () => {
     try {
         console.log('add to cart, uid', props.user.uid);
         const response = await axios.post(`/api/users/${props.user.uid}/cart`, {id: product.value.id});
-        console.log('add to cart, response',response.data);
+        // console.log('add to cart, response',response.data);
         router.push({
             path:'/cart'
         })
@@ -128,7 +128,7 @@ onMounted(async() => {
 .detail-img {
     height: 400px;
 }
-.addToCart-button {
+.btn-style {
     background-color:#269EFF;
     border: 1px solid #1F7087;
 }

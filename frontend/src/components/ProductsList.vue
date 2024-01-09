@@ -7,7 +7,7 @@
                 <v-card-subtitle class="product-price">{{ product.price }}</v-card-subtitle>
                 <v-btn 
                     :to="'products' + '/' + product.id"
-                    class="mb-4 vd-button"
+                    class="mb-4 btn-style"
                 >
                     View Details
                 </v-btn>
@@ -28,7 +28,7 @@ const props = defineProps({
 </script>
 
 <style scoped>
-.vd-button {
+.btn-style {
     background-color:#269EFF;
     border: 1px solid #1F7087;
 }
