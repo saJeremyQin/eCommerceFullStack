@@ -67,8 +67,8 @@ const signIn = async() => {
     const auth = getAuth();
 
     const actionCodeSettings = {
-        // url:`https://vue-ecommerce-fullstack.onrender.com/products/${product.value.id}`,
-        url:`https://legendary-space-palm-tree-rjx9vppjqw2wqvg-8080.preview.app.github.dev/products/${product.value.id}`,
+        url:`https://vue-ecommerce-fullstack.onrender.com/products/${product.value.id}`,
+        // url:`https://legendary-space-palm-tree-rjx9vppjqw2wqvg-8080.preview.app.github.dev/products/${product.value.id}`,
         handleCodeInApp: true,
     };
     await sendSignInLinkToEmail(auth, email, actionCodeSettings);
@@ -80,7 +80,7 @@ const addToCart = async () => {
     try {
         console.log('add to cart, uid', props.user.uid);
         const response = await axios.post(`/api/users/${props.user.uid}/cart`, {id: product.value.id});
-        // console.log('add to cart, response',response.data);
+        console.log('add to cart, response',response.data);
         router.push({
             path:'/cart'
         })

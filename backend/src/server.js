@@ -3,7 +3,7 @@ import express from 'express';
 import { MongoClient } from 'mongodb';
 import path from 'path';
 
-const url = 'mongodb+srv://jeremyqinsa:600186Qd%21%21@cluster0.xm7uvh0.mongodb.net/?retryWrites=true&w=majority'
+const url = process.env.DB_HOST;
 const client = new MongoClient(url);
 
 const app = express();
