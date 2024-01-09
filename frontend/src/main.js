@@ -2,8 +2,16 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import router from '@/router'
 import './main.css'
-
+import 'vuetify/styles'
+import { createVuetify } from 'vuetify'
+import * as components from 'vuetify/components'
+import * as directives from 'vuetify/directives'
 import { initializeApp } from "firebase/app";
+
+const vuetify = createVuetify({
+  components,
+  directives,
+})
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -18,4 +26,4 @@ const firebaseConfig = {
 // Initialize Firebase
 initializeApp(firebaseConfig);
 
-createApp(App).use(router).mount('#app')
+createApp(App).use(router).use(vuetify).mount('#app')

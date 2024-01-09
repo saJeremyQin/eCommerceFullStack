@@ -1,18 +1,19 @@
 <template>
-  <div class="grid-wrap">
-        <div 
-            class="product-item"
-            v-for="product in props.products"
-            :key="product.id"
-        >
-            <img :src="product.imageUrl" />
-            <h3 class="product-name">{{ product.name }}</h3>
-            <p class="product-price">{{ product.price }}</p>
-            <router-link :to="'products' + '/' + product.id">
-                <button>View Details</button>
-            </router-link>
-        </div>
-    </div>
+    <v-row class="mt-4">
+        <v-col cols="12" md="4" v-for="(product) in props.products" :key="product.id">
+            <v-card class="text-center">
+                <v-img :src="product.imageUrl" />
+                <v-card-title class="product-name">{{ product.name }}</v-card-title>
+                <v-card-subtitle class="product-price">{{ product.price }}</v-card-subtitle>
+                <v-btn 
+                    :to="'products' + '/' + product.id"
+                    class="mb-4 btn-style"
+                >
+                    View Details
+                </v-btn>
+            </v-card>
+        </v-col>
+    </v-row>
 </template>
 
 <script setup>
@@ -25,3 +26,10 @@ const props = defineProps({
     }
 });
 </script>
+
+<style scoped>
+.btn-style {
+    background-color:#269EFF;
+    border: 1px solid #1F7087;
+}
+</style>
