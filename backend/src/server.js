@@ -1,7 +1,14 @@
 import express from 'express';
 // import cors from 'cors';
+import dotenv from 'dotenv';
 import { MongoClient } from 'mongodb';
 import path from 'path';
+
+const envFile = process.env.NODE_ENV === 'production' ? '.env' : '.env.local';
+
+dotenv.config({
+    path:envFile,
+});
 
 const url = process.env.DB_HOST;
 const client = new MongoClient(url);
