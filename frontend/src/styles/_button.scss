@@ -1,0 +1,6 @@
+@use "base" as *;
+@use "sass:color";
+.btn-style {
+    background-color: color.adjust($colour-yellow, $lightness: -10%);
+    border: 1px solid color.adjust($colour-yellow, $lightness: -10%);
+}

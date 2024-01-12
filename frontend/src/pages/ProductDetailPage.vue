@@ -124,12 +124,10 @@ onMounted(async() => {
 })
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+@use "@/styles/button" as *;
+
 .detail-img {
     height: 400px;
-}
-.btn-style {
-    background-color:#269EFF;
-    border: 1px solid #1F7087;
 }
 </style>

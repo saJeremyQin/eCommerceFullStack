@@ -40,7 +40,9 @@ const signOut = async() => {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+@use "@/styles/button" as *;        //don't need to use namespace
+
 .nav-bar {
     border-bottom: 1px solid #ddd;
     height: 75px;
@@ -50,12 +52,8 @@ const signOut = async() => {
     height: 120px;
 }
 .signout-btn {
-    background-color:#269EFF;
-    border: 1px solid #1F7087;
+    @extend .btn-style;
     margin-right: 10px;
 }
-.btn-style {
-    background-color:#269EFF;
-    border: 1px solid #1F7087;
-}
+
 </style>
