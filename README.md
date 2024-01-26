@@ -6,4 +6,5 @@ original course https://github.com/LinkedInLearning/vuejs-creating-and-hosting-a
 3. Divide router in a seperated file.
 4. publish branch is the latest.
 5. use vuetify
-6. scss may be used to avoid duplicate styles
+6. scss has been used to avoid duplicate styles
+7. Please visit https://vue-ecommerce-fullstack.onrender.com
